@@ -35,7 +35,7 @@ def clean_dataframe(df):
     'gameid', 'playerid', 'teamid', 'side', 'position','champion', 'result', 'kills', 'deaths', 'assists', 
     'damagetochampions', 'visionscore', 'earnedgold', 'total cs', 'golddiffat15', 'csdiffat15',
     'wardsplaced', 'wpm', 'wardskilled', 'wcpm', 'damagetakenperminute', 'dpm', 'damageshare', 'golddiffat25', 'golddiffat20',
-    'assistsat10', 'killsat10', 'monsterkills'
+    'assistsat10', 'killsat10', 'monsterkills', 'cspm'
     ]]
 
     #Cleaning up null entrys (or ones that arent needed)
@@ -93,7 +93,8 @@ def create_final_df(game_metadata, game_player_stats):
             'damagetochampions': 'sum',
             'monsterkills': 'sum',
             'killsat10': 'sum',
-            'assistsat10': 'sum'
+            'assistsat10': 'sum',
+            'cspm': 'mean'
         })
     )
 
@@ -104,12 +105,12 @@ def create_final_df(game_metadata, game_player_stats):
     adc_df = (
         game_player_stats[game_player_stats["position"] == "bot"]
         .loc[:, ["gameid", "teamid", "golddiffat15", "damagetochampions", "earnedgold", "damagetakenperminute", "dpm", "damageshare", "kills", "deaths", "assists"
-                 , "golddiffat20", "golddiffat25", "total cs"
+                 , "golddiffat20", "golddiffat25", "total cs", "cspm"
                  ]]
         .rename(columns={"golddiffat15": "adc_golddiffat15", "damagetochampions": "adc_damagetochampions", "earnedgold": "adc_earnedgold", 
                          "damagetakenperminute": "adc_damagetakenperminute", "dpm": "adc_dpm", "damageshare": "adc_damageshare", "kills": "adc_kills",
                          "deaths": "adc_deaths", "assists": "adc_assists", "golddiffat20": "adc_golddiffat20", "golddiffat25": "adc_golddiffat25",
-                         "total cs": "adc_total_cs"})
+                         "total cs": "adc_total_cs", "cspm": "adc_cspm"})
     )
 
     df = df.merge(adc_df, on=["gameid", "teamid"], how="left")
@@ -117,12 +118,12 @@ def create_final_df(game_metadata, game_player_stats):
     jungle_df = (
         game_player_stats[game_player_stats["position"] == "jng"]
         .loc[:, ["gameid", "teamid", "golddiffat15", "damagetochampions", "earnedgold", "damagetakenperminute", "dpm", "damageshare", "kills", "deaths", "assists"
-                 , "golddiffat20", "golddiffat25", "total cs", "monsterkills", "killsat10", "assistsat10"
+                 , "golddiffat20", "golddiffat25", "total cs", "monsterkills", "killsat10", "assistsat10", "cspm"
                  ]]
         .rename(columns={"golddiffat15": "jng_golddiffat15", "damagetochampions": "jng_damagetochampions", "earnedgold": "jng_earnedgold",
                          "damagetakenperminute": "jng_damagetakenperminute", "dpm": "jng_dpm", "damageshare": "jng_damageshare", "kills": "jng_kills", "assists": "jng_assists",
                          "deaths": "jng_deaths", "golddiffat20": "jng_golddiffat20", "golddiffat25": "jng_golddiffat25", "total cs": "jng_total_cs", "monsterkills": "jng_monsterkills",
-                        "killsat10": "jng_killsat10", "assistsat10": "jng_assistsat10"
+                        "killsat10": "jng_killsat10", "assistsat10": "jng_assistsat10", "cspm": "jng_cspm"
                          })
     )
 
