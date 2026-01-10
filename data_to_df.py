@@ -2,6 +2,7 @@
 
 import subprocess
 import time
+import sys
 
 files = [
     'conv_csv.py',
@@ -16,7 +17,7 @@ for file in files:
     start_time = time.time()
 
     #Run the file
-    subprocess.run(['python', file], check=True)
+    subprocess.run([sys.executable, file], check=True)
     end_time = time.time()
     print(f'Finished running {file}, with a runtime of {end_time - start_time} seconds')
     total_time += end_time - start_time
