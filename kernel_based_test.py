@@ -91,6 +91,7 @@ def run_test(x,y,s):
 #run_test('jng_killpart', 'result', ['jng_kills', 'kills']) #Conditional independence of jng_killpart and result given ['jng_kills', 'kills']: p-Value: 1.7813572087410634e-06
 #the difference between early and late game killparticipation shows us actually how little the very early game in terms of kill participation 
 #impact -> should imply that later kills just mean more in terms of objective, longer respawn timers etc
+#important results
 
 
 #run_test('adc_kills', 'result', ['adc_killpart', 'kills']) #Conditional independence of adc_kills and result given ['adc_killpart', 'kills']: p-Value: 0.5558284836926493
@@ -120,4 +121,15 @@ def run_test(x,y,s):
 
 #run_test('kills', 'result', ['golddiffat15', 'adc_killpart', 'jng_killpartat10', 'adc_dpm', 'jng_dpm'])
 #Conditional independence of kills and result given ['golddiffat15', 'adc_killpart', 'jng_killpartat10', 'adc_dpm', 'jng_dpm']: p-Value: 0.0
-#
+
+#run_test('win_prob', 'visionscore', [])
+#run_test('win_prob', 'visionscore', ['gamelength'])
+#Conditional independence of win_prob and visionscore given []: p-Value: 0.6707283960482469 --> cannot reject independence 
+#Conditional independence of win_prob and visionscore given ['gamelength']: p-Value: 0.0818494535828802 --> conditioning on collider flips it  
+#need to cleanly again figure out why collider flips it tbh
+#implies that gamelength is a collider 
+
+#run_test('rating_before', 'rating_after', ['win_prob']) #Conditional independence of rating_before and rating_after given ['win_prob']: p-Value: 0.0
+
+run_test('win_prob', 'golddiffat15', []) #Conditional independence of win_prob and golddiffat15 given []: p-Value: 0.042567836301135364
+#mediator ? 
